@@ -1,5 +1,10 @@
+import pandas as pd
 import tensorflow as tf
 import model
+from road import road_damage as rd
+import os
+import cv2
+import numpy as np
 
 FLAGS = tf.app.flags.FLAGS
 
@@ -47,6 +52,41 @@ def main(args):
         model.training(FLAGS, is_finetune=True)
     else:
         model.training(FLAGS, is_finetune=False)
+
+    if FLAGS.testing:
+        path = FLAGS.test_dir
+        fd = open(path)
+        image_filenames = []
+        filenames = []
+        for i in fd:
+            i = i.strip().split(" ")
+            image_filenames.append(i[0])
+        count = 0
+        for image_path in image_filenames:
+            orig_image = cv2.imread(image_path)
+            
+            img_seg = cv2.imread(os.getcwd() + "/out_image/" + str(image_filenames[count]).split('/')[-1])
+            img_seg = cv2.resize(img_seg, (orig_image.shape[1], orig_image.shape[0]))
+            img_seg = np.array(img_seg)
+            cv2.imwrite("/out_image/" + str(image_filenames[count]).split('/')[-1], img_seg)
+            #cv2.imshow("segmented resized", img_seg)
+            #cv2.waitKey(0)
+            points = []
+            for i in range(img_seg.shape[0]):
+                for j in range(img_seg.shape[1]):
+                    if((img_seg[i,j,0] == 0 and img_seg[i,j,1] == 255 and img_seg[i,j,2] == 0) or (img_seg[i,j,0] == 0 and img_seg[i,j,1] == 0 and img_seg[i,j,2] == 255)):
+                        points.append([j,i])
+
+            points = np.array(points)           
+            x, y, w, h = cv2.boundingRect(points)
+            
+            modified_image = orig_image[y:y+j,x:x+w]            
+            #modified_image = cv2.resize(modified_image, Size(960, 720))
+            #cv2.imshow("cropped", modified_image)
+            #cv2.waitKey(0)
+            cv2.imwrite("modified_image.jpg", modified_image)
+            rd.pothole_detect(os.getcwd()+ "/modified_image.jpg", count)
+            count = count + 1
 
 if __name__ == '__main__':
   tf.app.run()

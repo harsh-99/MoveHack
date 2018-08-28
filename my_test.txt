@@ -1,1 +1,15 @@
-/users/TeamVideoSummarization/shivansh/Tensorflow-SegNet/train/newleft/train/174/559507_leftImg8bit.png /users/TeamVideoSummarization/shivansh/Tensorflow-SegNet/train/result/train/174/559507_leftImg8bit.png
+/home/shubhika/Downloads/road_data/001490_leftImg8bit.png /home/shubhika/Downloads/road_data/download.jpeg
+/home/shubhika/Downloads/road_data/003361_leftImg8bit.png /home/shubhika/Downloads/road_data/download.jpeg
+/home/shubhika/Downloads/road_data/004580_leftImg8bit.png /home/shubhika/Downloads/road_data/download.jpeg
+/home/shubhika/Downloads/road_data/008220_leftImg8bit.png /home/shubhika/Downloads/road_data/download.jpeg
+/home/shubhika/Downloads/road_data/009073_leftImg8bit.png /home/shubhika/Downloads/road_data/download.jpeg
+/home/shubhika/Downloads/road_data/015314_leftImg8bit.png /home/shubhika/Downloads/road_data/download.jpeg
+/home/shubhika/Downloads/road_data/016349_leftImg8bit.png /home/shubhika/Downloads/road_data/download.jpeg
+/home/shubhika/Downloads/road_data/078822_leftImg8bit.png /home/shubhika/Downloads/road_data/download.jpeg
+/home/shubhika/Downloads/road_data/147139_leftImg8bit.png /home/shubhika/Downloads/road_data/download.jpeg
+/home/shubhika/Downloads/road_data/160607_leftImg8bit.png /home/shubhika/Downloads/road_data/download.jpeg
+/home/shubhika/Downloads/road_data/637197_leftImg8bit.png /home/shubhika/Downloads/road_data/download.jpeg
+/home/shubhika/Downloads/road_data/676540_leftImg8bit.png /home/shubhika/Downloads/road_data/download.jpeg
+/home/shubhika/Downloads/road_data/816394_leftImg8bit.png /home/shubhika/Downloads/road_data/download.jpeg
+/home/shubhika/Downloads/road_data/chandigarh-roads-s.jpg /home/shubhika/Downloads/road_data/download.jpeg
+/home/shubhika/Downloads/road_data/download.jpeg /home/shubhika/Downloads/road_data/download.jpeg

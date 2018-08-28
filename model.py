@@ -1,6 +1,7 @@
 import tensorflow as tf
 from tensorflow.python.framework import ops
 from tensorflow.python.framework import dtypes
+import cv2
 
 import os, sys
 import numpy as np
@@ -307,9 +308,10 @@ def test(FLAGS):
 
   saver = tf.train.Saver(variables_to_restore)
 
-  gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.05)
-
-  with tf.Session(config=tf.ConfigProto(gpu_options=gpu_options)) as sess:
+  #gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.05)
+  #config=tf.ConfigProto(gpu_options=gpu_options)
+  count = 0
+  with tf.Session(config=tf.ConfigProto(allow_soft_placement=True)) as sess:
     # Load checkpoint
     saver.restore(sess, test_ckpt )
 
@@ -318,7 +320,9 @@ def test(FLAGS):
     threads = tf.train.start_queue_runners(sess=sess)
     hist = np.zeros((NUM_CLASSES, NUM_CLASSES))
     for image_batch, label_batch  in zip(images, labels):
-
+      #image_batch = cv2.resize(image_batch, (480, 360))
+      #print(image_batch.shape)
+      #label_batch = image_batch
       feed_dict = {
         test_data_node: image_batch,
         test_labels_node: label_batch,
@@ -328,17 +332,17 @@ def test(FLAGS):
       dense_prediction, im = sess.run([logits, pred], feed_dict=feed_dict)
       # output_image to verify
       if (FLAGS.save_image):
-          writeImage(im[0], 'testing_image0.png')
+          #writeImage(im[0], 'testing_image0.png')
           #writeImage(im[1], 'testing_image1.png')
           #writeImage(im[2], 'testing_image2.png')
-          # writeImage(im[0], 'out_image/'+str(image_filenames[count]).split('/')[-1])
+          writeImage(im[0], 'out_image/'+str(image_filenames[count]).split('/')[-1])
 
       hist += get_hist(dense_prediction, label_batch)
-      # count+=1
-    acc_total = np.diag(hist).sum() / hist.sum()
-    iu = np.diag(hist) / (hist.sum(1) + hist.sum(0) - np.diag(hist))
-    print("acc: ", acc_total)
-    print("mean IU: ", np.nanmean(iu))
+      count+=1
+    #acc_total = np.diag(hist).sum() / hist.sum()
+    #iu = np.diag(hist) / (hist.sum(1) + hist.sum(0) - np.diag(hist))
+    #print("acc: ", acc_total)
+    #print("mean IU: ", np.nanmean(iu))
 
 def training(FLAGS, is_finetune=False):
   max_steps = FLAGS.max_steps*10
