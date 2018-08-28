@@ -38,7 +38,7 @@ Check requirements.txt
 
 # Instructions for Running the code
 
-Put all the testing images in a folder named test. 
+Put all the testing images in a folder named test (the image file name should not contain white space). 
 
 Command for testing:
 `
