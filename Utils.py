@@ -86,20 +86,20 @@ def _variable_with_weight_decay(name, shape, initializer, wd):
 
 def writeImage(image, filename):
     """ store label data to colored image """
-    Background = [10,10,10]
-    Fence = [255,0,0]
-    Road = [0,255,0]
-    Roadside_things = [100,100,0]
-    Riders = [255,255,0]
-    Living_being = [0,100,200]
-    Sidewalk = [0,255,255]
-    Curb = [255,0,255]
-    Parking = [0,100,100]
-    Fallback = [0,0,255]
-    Heavy_vehicle = [0,128,255]
-    Non_fallback = [200,100,0]
-    obs_fallback = [100,0,200]
-    Unlabelled = [0,0,0]
+    Background = [0,0,0]
+    Fence = [1,1,1]
+    Road = [2,2,2]
+    Roadside_things = [3,3,3]
+    Riders = [4,4,4]
+    Living_being = [5,5,5]
+    Sidewalk = [6,6,6]
+    Curb = [7,7,7]
+    Parking = [8,8,8]
+    Fallback = [9,9,9]
+    Heavy_vehicle = [10,10,10]
+    Non_fallback = [11,11,11]
+    obs_fallback = [12,12,12]
+    Unlabelled = [13,13,13]
     r = image.copy()
     g = image.copy()
     b = image.copy()

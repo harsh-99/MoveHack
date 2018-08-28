@@ -23,6 +23,9 @@ tf.app.flags.DEFINE_integer('image_c', "3", """ image channel (RGB) """)
 tf.app.flags.DEFINE_integer('num_class', "13", """ total class number """)
 tf.app.flags.DEFINE_boolean('save_image', True, """ whether to save predicted image """)
 
+def sigmoid(x):
+    return (1 / (1 + np.exp(-x)))
+
 def checkArgs():
     if FLAGS.testing != '':
         print('The model is set to Testing')
@@ -68,24 +71,35 @@ def main(args):
             img_seg = cv2.imread(os.getcwd() + "/out_image/" + str(image_filenames[count]).split('/')[-1])
             img_seg = cv2.resize(img_seg, (orig_image.shape[1], orig_image.shape[0]))
             img_seg = np.array(img_seg)
-            cv2.imwrite("/out_image/" + str(image_filenames[count]).split('/')[-1], img_seg)
+            #print(img_seg.shape)
+            cv2.imwrite("out_image/" + str(image_filenames[count]).split('/')[-1], img_seg)
             #cv2.imshow("segmented resized", img_seg)
             #cv2.waitKey(0)
             points = []
+            count_red = 1
+            count_green = 1
             for i in range(img_seg.shape[0]):
                 for j in range(img_seg.shape[1]):
-                    if((img_seg[i,j,0] == 0 and img_seg[i,j,1] == 255 and img_seg[i,j,2] == 0) or (img_seg[i,j,0] == 0 and img_seg[i,j,1] == 0 and img_seg[i,j,2] == 255)):
+                    if((img_seg[i,j,0] == 2 and img_seg[i,j,1] == 2 and img_seg[i,j,2] == 2)):
                         points.append([j,i])
+                        count_green += 1
+                    if((img_seg[i,j,0] == 9 and img_seg[i,j,1] == 9 and img_seg[i,j,2] == 9)):  
+                        points.append([j,i])
+                        count_red += 1  
 
             points = np.array(points)           
             x, y, w, h = cv2.boundingRect(points)
-            
             modified_image = orig_image[y:y+j,x:x+w]            
             #modified_image = cv2.resize(modified_image, Size(960, 720))
             #cv2.imshow("cropped", modified_image)
             #cv2.waitKey(0)
             cv2.imwrite("modified_image.jpg", modified_image)
-            rd.pothole_detect(os.getcwd()+ "/modified_image.jpg", count)
+            modified_image, no_box = rd.pothole_detect(os.getcwd()+ "/modified_image.jpg")
+            print("Image: "+ image_path)
+            print("The quality factor is " + str(sigmoid(float(count_red)/(count_red + count_green) + 0.15*no_box)))
+            orig_image[y:y+j,x:x+w] = modified_image
+            name = "road_damage/ans" + str(count) + ".jpg"
+            cv2.imwrite(name, orig_image)
             count = count + 1
 
 if __name__ == '__main__':

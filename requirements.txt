@@ -1,1 +1,6 @@
-
+tensorflow
+numpy
+pandas
+skimage
+six
+python-opencv
