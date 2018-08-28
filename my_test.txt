@@ -1,0 +1,1 @@
+/users/TeamVideoSummarization/shivansh/Tensorflow-SegNet/train/newleft/train/174/559507_leftImg8bit.png /users/TeamVideoSummarization/shivansh/Tensorflow-SegNet/train/result/train/174/559507_leftImg8bit.png
