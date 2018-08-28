@@ -6,8 +6,8 @@ parser.add_argument('--folder', dest='folder', help='folder input')
 if not os.path.exists('out_image'):
 	os.mkdir('out_image')
 
-if not os.path.exists('road_image'):
-	os.mkdir('road_image')
+if not os.path.exists('road_damage'):
+	os.mkdir('road_damage')
 
 args = parser.parse_args()
 f = open('test.txt','w')
